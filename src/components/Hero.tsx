@@ -3,6 +3,16 @@ import { Card } from "@/components/ui/card"
 import { ArrowRight, Bot, Sparkles, Zap } from "lucide-react"
 import heroImage from "@/assets/hero-orion.jpg"
 
+declare global {
+  interface Window {
+    botpress: {
+      open: () => void;
+      init: (config: any) => void;
+      on: (event: string, callback: () => void) => void;
+    };
+  }
+}
+
 const Hero = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -75,7 +85,17 @@ const Hero = () => {
               Start Your Journey
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="orion" size="lg">
+            <Button 
+              variant="orion" 
+              size="lg"
+              onClick={() => {
+                const webchat = document.getElementById('webchat');
+                if (webchat) {
+                  webchat.style.display = 'block';
+                  window.botpress.open();
+                }
+              }}
+            >
               Watch Demo
             </Button>
           </div>
